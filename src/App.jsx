@@ -11,6 +11,17 @@ const messageFlow = [
   { id: 8, from: "gNB", to: "UE", text: "PDU Session Establishment Accept", proto: "NAS", plane: "CP" },
   { id: 9, from: "UE", to: "UPF", text: "User Data (IP Packets)", proto: "GTP-U", plane: "UP" }
 ];
+const flowData = [
+  { id: "01", from: "UE", to: "gNB", msg: "Registration Request", proto: "NAS" },
+  { id: "02", from: "gNB", to: "AMF", msg: "Initial UE Message", proto: "NGAP" },
+  { id: "03", from: "AMF", to: "gNB", msg: "Authentication Request", proto: "NGAP" },
+  { id: "04", from: "gNB", to: "UE", msg: "Authentication Request", proto: "NAS" },
+  { id: "05", from: "UE", to: "gNB", msg: "Authentication Response", proto: "NAS" },
+  { id: "06", from: "gNB", to: "AMF", msg: "Authentication Response", proto: "NGAP" },
+  { id: "07", from: "AMF", to: "gNB", msg: "Registration Accept", proto: "NGAP" },
+  { id: "08", from: "gNB", to: "UE", msg: "Registration Accept", proto: "NAS" },
+];
+
 
 export default function App() {
   return (
@@ -63,7 +74,26 @@ export default function App() {
         </div>
       </section>
 
-      
+      <section className="container">
+         {flowData.map((item) => (
+        <div className="flow-row" key={item.id}>
+          <div className="step">{item.id}</div>
+
+          <div className="nodes">
+            <span className="node">{item.from}</span>
+            <span className="arrow">⟶</span>
+            <span className="node">{item.to}</span>
+          </div>
+
+          <div className="message">{item.msg}</div>
+
+          <div className="tags">
+            <span className="tag proto">{item.proto}</span>
+            <span className="tag cp">CP</span>
+          </div>
+        </div>
+      ))}
+      </section>
       <section className="flow">
         {messageFlow.map((m) => (
           <div className="flow-row" key={m.id}>
@@ -86,6 +116,7 @@ export default function App() {
         ))}
         
       </section>
+      
       
       <section className="plane-info">
        
